@@ -1,0 +1,482 @@
+/* General Styling */
+:root {
+    --primary-color: #3498db; /* Biru */
+    --secondary-color: #2c3e50; /* Abu-abu gelap */
+    --accent-color: #e74c3c; /* Merah */
+    --text-color: #333;
+    --light-text-color: #f4f4f4;
+    --bg-light: #f9f9f9;
+    --bg-dark: #2c3e50;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-light);
+    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Menghilangkan ruang bawah yang tidak perlu pada beberapa gambar */
+}
+
+section {
+    padding: 80px 0;
+    text-align: center;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+}
+
+.button-primary, .button-secondary {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: 2px solid var(--primary-color);
+}
+
+.button-primary:hover {
+    background-color: #2980b9; /* sedikit lebih gelap */
+    border-color: #2980b9;
+}
+
+.button-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.button-secondary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Navbar */
+.navbar-container {
+    background-color: var(--bg-dark);
+    color: var(--light-text-color);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+}
+
+.navbar-container .logo h1 {
+    color: var(--light-text-color);
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.nav-list ul {
+    display: flex;
+}
+
+.nav-list li {
+    margin-left: 30px;
+}
+
+.nav-list a {
+    color: var(--light-text-color);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+.nav-list a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-list a:hover::after {
+    width: 100%;
+}
+
+.nav-toggle {
+    display: none; /* Sembunyikan secara default di desktop */
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--light-text-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.hamburger {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 3px;
+    background: var(--light-text-color);
+    transition: all 0.3s ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: var(--light-text-color);
+    transition: all 0.3s ease;
+}
+
+.hamburger::before {
+    top: -8px;
+}
+
+.hamburger::after {
+    top: 8px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('hero-bg.jpg') no-repeat center center/cover;
+    color: var(--light-text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Memenuhi tinggi viewport */
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-content .profile-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--primary-color);
+    margin: 0 auto 30px auto;
+    box-shadow: var(--box-shadow);
+}
+
+.hero-content h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: var(--light-text-color);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* About Section */
+.about-section {
+    background-color: white;
+}
+
+.about-section h3 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.about-section p {
+    max-width: 800px;
+    margin: 0 auto 15px auto;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* Portfolio Section */
+.portfolio-section {
+    background-color: var(--bg-light);
+}
+
+.portfolio-section h3 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsif grid */
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.portfolio-item {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+}
+
+.portfolio-item h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.portfolio-item p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Contact Section */
+.contact-section {
+    background-color: var(--secondary-color);
+    color: var(--light-text-color);
+}
+
+.contact-section h3 {
+    color: var(--light-text-color);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.contact-section p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+/* Footer */
+footer {
+    background-color: #1a252f; /* Sedikit lebih gelap dari secondary */
+    color: rgba(255, 255, 255, 0.7);
+    padding: 30px 0;
+    text-align: center;
+}
+
+footer .social-media {
+    margin-bottom: 20px;
+}
+
+footer .social-media a {
+    color: var(--light-text-color);
+    font-size: 1.8rem;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+footer .social-media a:hover {
+    color: var(--primary-color);
+}
+
+footer p {
+    font-size: 0.9rem;
+}
+
+
+/*
+  =====================================
+  Media Queries untuk Responsivitas
+  =====================================
+*/
+
+/* Untuk Tablet dan Layar Kecil (Max-width 768px) */
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-wrap: wrap; /* Izinkan wrap jika item terlalu banyak */
+    }
+
+    .nav-list {
+        display: none; /* Sembunyikan navigasi default */
+        width: 100%;
+        text-align: center;
+        flex-direction: column;
+        background-color: var(--bg-dark);
+        position: absolute;
+        top: 60px; /* Di bawah navbar */
+        left: 0;
+        box-shadow: var(--box-shadow);
+        padding: 20px 0;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        pointer-events: none; /* Nonaktifkan interaksi saat tidak aktif */
+    }
+
+    .nav-list.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+    }
+
+    .nav-list li {
+        margin: 15px 0;
+    }
+
+    .nav-toggle {
+        display: block; /* Tampilkan tombol toggle di mobile/tablet */
+    }
+
+    /* Animasi hamburger icon */
+    .nav-toggle.active .hamburger {
+        background: transparent;
+    }
+    .nav-toggle.active .hamburger::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
+    .nav-toggle.active .hamburger::after {
+        transform: rotate(-45deg);
+        top: 0;
+    }
+
+    .hero-content h2 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .profile-photo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .about-section p, .contact-section p {
+        font-size: 1rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Kolom lebih kecil */
+        gap: 20px;
+    }
+
+    section {
+        padding: 60px 0; /* Kurangi padding section */
+    }
+
+    h3 {
+        font-size: 2rem;
+    }
+}
+
+/* Untuk Handphone (Max-width 480px) */
+@media (max-width: 480px) {
+    .navbar-container {
+        padding: 10px 15px;
+    }
+
+    .navbar-container .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+        border-width: 3px;
+    }
+
+    .button-primary, .button-secondary {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+    }
+
+    .about-section p, .contact-section p {
+        font-size: 0.9rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr; /* Satu kolom untuk proyek */
+    }
+
+    .portfolio-item {
+        padding: 15px;
+    }
+
+    .portfolio-item h4 {
+        font-size: 1.3rem;
+    }
+
+    .portfolio-item p {
+        font-size: 0.85rem;
+    }
+
+    footer .social-media a {
+        font-size: 1.5rem;
+        margin: 0 10px;
+    }
+}
