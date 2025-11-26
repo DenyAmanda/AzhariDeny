@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Saya - [Nama Anda]</title>
+    <title>Portofolio Saya - DENY AZHARI</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/4dca0a2079.js" crossorigin="anonymous"></script>
 </head>
@@ -11,7 +11,7 @@
 
     <header class="navbar-container">
         <div class="logo">
-            <h1>[Nama Anda]</h1>
+            <h1>DENY AZHARI</h1>
         </div>
         <nav class="nav-list">
             <ul>
@@ -19,7 +19,7 @@
                 <li><a href="#about">Tentang</a></li>
                 <li><a href="#portfolio">Portofolio</a></li>
                 <li><a href="#contact">Kontak</a></li>
-            </ul>
+                </ul>
         </nav>
         <button class="nav-toggle" aria-label="toggle navigation">
             <span class="hamburger"></span>
@@ -27,10 +27,16 @@
     </header>
 
     <section id="home" class="hero-section">
+        
+        <video autoplay loop muted playsinline class="background-video">
+            <source src="3129671-uhd_3840_2160_30fps.mp4" type="video/mp4">
+            Browser Anda tidak mendukung tag video.
+        </video>
+        
         <div class="hero-content">
-            <img src="FB_IMG_1676974955165.jpg" alt="Foto Profil [Nama Anda]" class="profile-photo">
-            <h2>Halo, Saya [Nama Anda]</h2>
-            <p>Seorang [Profesi Anda], dengan minat pada [Bidang Minat Anda].</p>
+            <img src="FB_IMG_1676974955165.jpg" alt="Foto Profil Deny Azhari" class="profile-photo">
+            <h2>Halo, Saya DENY AZHARI</h2>
+            <p>Seorang Mahasiswa, dengan minat pada Bidang Komputer.</p>
             <a href="#portfolio" class="button-primary">Lihat Karya Saya</a>
         </div>
     </section>
@@ -38,8 +44,8 @@
     <section id="about" class="about-section">
         <div class="container">
             <h3>Tentang Saya</h3>
-            <p>Saya adalah [Nama Anda], seorang [Profesi Anda] dengan pengalaman di [Sebutkan beberapa keahlian/pengalaman]. Saya passionate tentang [Sebutkan passion Anda]. Selama ini, saya telah mengerjakan berbagai proyek yang melibatkan [Sebutkan beberapa teknologi/jenis proyek].</p>
-            <p>Ketika tidak bekerja, saya suka [Hobi Anda, misal: membaca buku, menjelajahi alam, coding proyek pribadi].</p>
+            <p>Saya adalah **Deny Azhari**, seorang **Mahasiswa** dengan pengalaman di bidang **TI dan Pengembangan Web**. Saya passionate tentang **Pemrograman dan Desain Interaktif**. Selama ini, saya telah mengerjakan berbagai proyek yang melibatkan **HTML, CSS, dan JavaScript**.</p>
+            <p>Ketika tidak bekerja, saya suka **membaca buku, menjelajahi alam, dan coding proyek pribadi**.</p>
         </div>
     </section>
 
@@ -65,7 +71,7 @@
                     <p>Pembuatan website portofolio untuk fotografer profesional.</p>
                     <a href="#" target="_blank" class="button-secondary">Lihat Proyek</a>
                 </div>
-                </div>
+            </div>
         </div>
     </section>
 
@@ -74,9 +80,9 @@
             <h3>Hubungi Saya</h3>
             <p>Tertarik untuk bekerja sama atau sekadar ingin menyapa? Silakan hubungi saya melalui:</p>
             <div class="contact-info">
-                <p><i class="fas fa-envelope"></i> emailanda@example.com</p>
-                <p><i class="fas fa-phone"></i> +62 812 3456 7890</p>
-                <p><i class="fas fa-map-marker-alt"></i> Kota Anda, Negara Anda</p>
+                <p><i class="fas fa-envelope"></i> denyazhari110899.com</p>
+                <p><i class="fas fa-phone"></i> +62 831 5578 3812</p>
+                <p><i class="fas fa-map-marker-alt"></i> Binjai, Sumatera Utara, Indonesia</p>
             </div>
             <a href="mailto:emailanda@example.com" class="button-primary">Kirim Email</a>
         </div>
@@ -89,12 +95,12 @@
                 <a href="https://linkedin.com/in/akun_anda" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 <a href="https://github.com/akun_anda" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
             </div>
-            <p>&copy; 2023 [Nama Anda]. Semua Hak Dilindungi.</p>
+            <p>&copy; 2023 Deny Azhari. Semua Hak Dilindungi.</p>
         </div>
     </footer>
 
     <script>
-        // JavaScript untuk fungsionalitas tombol navigasi mobile
+        // JavaScript untuk fungsionalitas tombol navigasi mobile (tetap dipertahankan)
         const navToggle = document.querySelector('.nav-toggle');
         const navList = document.querySelector('.nav-list');
 
@@ -103,7 +109,6 @@
             navToggle.classList.toggle('active');
         });
 
-        // Menutup menu saat link diklik (untuk mobile)
         document.querySelectorAll('.nav-list a').forEach(item => {
             item.addEventListener('click', () => {
                 if (navList.classList.contains('active')) {
@@ -113,39 +118,7 @@
             });
         });
 
-        // ======================================
-        // Fungsionalitas Modal Login
-        // ======================================
-        const modal = document.getElementById("loginModal");
-        const btn = document.getElementById("openLoginModal");
-        const span = document.getElementsByClassName("close-button")[0];
-
-        // Ketika pengguna mengklik tombol 'Masuk', buka modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // Ketika pengguna mengklik (x), tutup modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // Ketika pengguna mengklik di mana saja di luar modal, tutup
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-        
-        // ======================================
-        // BARIS BARU: Tampilkan Modal secara Otomatis (Timbul)
-        // ======================================
-        // window.onload akan menjalankan fungsi saat seluruh halaman selesai dimuat.
-        window.onload = function() {
-            modal.style.display = "block";
-        };
+        // Semua kode untuk Modal Login Dihapus
     </script>
-</body>
-</html>
 </body>
 </html>
