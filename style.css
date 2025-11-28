@@ -1,14 +1,14 @@
 /* General Styling */
 :root {
-    --primary-color: #10719b; /* Biru */
+    --primary-color: #00bcd4; /* Biru muda kebiruan, lebih sesuai dengan gambar */
     --secondary-color: #2c3e50; /* Abu-abu gelap */
     --accent-color: #e74c3c; /* Merah */
-    --text-color: #5d50a9;
+    --text-color: #ecf0f1; /* Teks default lebih terang untuk latar belakang gelap */
     --light-text-color: #f4f4f4;
     --bg-light: #f9f9f9;
-    --bg-dark: #2c3e50;
+    --bg-dark: #1f2a36; /* Lebih gelap dari sebelumnya untuk kontras */
     --border-radius: 8px;
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow lebih kuat */
 }
 
 * {
@@ -20,8 +20,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--bg-light);
+    color: var(--text-color); /* Menggunakan text-color baru */
+    background-color: var(--bg-dark); /* Background default gelap */
     overflow-x: hidden;
 }
 
@@ -53,29 +53,31 @@ section {
 
 h1, h2, h3, h4 {
     margin-bottom: 20px;
-    color: var(--secondary-color);
+    color: var(--light-text-color); /* Judul menjadi terang */
 }
 
 .button-primary, .button-secondary {
     display: inline-block;
     padding: 12px 25px;
     border-radius: var(--border-radius);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     margin-top: 20px;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.9rem;
+    letter-spacing: 0.5px; /* Sedikit jarak antar huruf */
 }
 
 .button-primary {
-    background-color: var(--primary-color);
+    background-color: transparent; /* Transparan seperti gambar */
     color: white;
-    border: 2px solid var(--primary-color);
+    border: 1px solid white; /* Border putih tipis */
 }
 
 .button-primary:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
 }
 
 .button-secondary {
@@ -107,6 +109,14 @@ h1, h2, h3, h4 {
     color: var(--light-text-color);
     font-size: 1.8rem;
     margin: 0;
+    display: flex; /* Untuk menyejajarkan ikon */
+    align-items: center;
+}
+
+.navbar-container .logo h1 i {
+    color: var(--primary-color); /* Warna ikon amplop di logo */
+    margin-left: 8px;
+    font-size: 1.5rem;
 }
 
 .nav-list ul {
@@ -122,22 +132,25 @@ h1, h2, h3, h4 {
     font-weight: 500;
     padding: 5px 0;
     position: relative;
+    display: flex; /* Untuk menyejajarkan ikon */
+    align-items: center;
 }
 
+/* Ikon di Navigasi */
+.nav-list a i {
+    margin-right: 8px;
+    color: var(--primary-color); /* Warna ikon navigasi */
+}
+
+/* Hilangkan efek garis bawah di bawah menu navigasi seperti di gambar */
 .nav-list a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    transition: width 0.3s ease;
+    content: none; /* Hapus garis bawah */
 }
 
-.nav-list a:hover::after {
-    width: 100%;
+.nav-list a:hover {
+    color: var(--primary-color); /* Ubah warna teks saat hover */
 }
+
 
 .nav-toggle {
     display: none;
@@ -178,17 +191,16 @@ h1, h2, h3, h4 {
 
 /* Hero Section */
 .hero-section {
-    /* Hanya overlay */
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)); 
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)); /* Overlay yang lebih gelap */
     color: var(--light-text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    text-align: center;
     padding: 20px;
-    position: relative; /* Penting untuk penempatan video */
-    overflow: hidden; /* Pastikan video tidak keluar dari batas */
+    position: relative;
+    overflow: hidden;
+    text-align: left; /* Teks di kiri */
 }
 
 /* Styling Video Background */
@@ -200,71 +212,160 @@ h1, h2, h3, h4 {
     height: 100%;
     object-fit: cover;
     transform: translate(-50%, -50%);
+    z-index: -2; /* Di bawah pseudo-element */
+    opacity: 0.8; /* Sedikit transparan agar ikon lebih menonjol */
+}
+
+/* Pseudo-element untuk ikon amplop di latar belakang (simulasi) */
+.hero-section::before,
+.hero-section::after {
+    content: '\f0e0'; /* Kode Font Awesome untuk ikon amplop */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    color: rgba(0, 188, 212, 0.08); /* Warna primary-color dengan opasitas rendah */
+    font-size: 150px; /* Ukuran besar */
+    z-index: -1; /* Di atas video, di bawah konten */
+    animation: float 15s ease-in-out infinite; /* Animasi mengambang */
+}
+
+.hero-section::before {
+    top: 10%;
+    left: 15%;
+    animation-delay: 0s;
+}
+
+.hero-section::after {
+    bottom: 20%;
+    right: 10%;
+    font-size: 180px;
+    animation-delay: 5s;
+}
+
+/* Anda bisa tambahkan lebih banyak pseudo-element atau div manual jika ingin lebih banyak ikon */
+/* Contoh untuk lebih banyak ikon (jika CSS pseudo-element kurang): */
+/*
+.background-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
     z-index: -1;
 }
+.envelope-icon {
+    position: absolute;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: rgba(0, 188, 212, 0.08);
+    animation: float 15s ease-in-out infinite;
+}
+.envelope-1 { top: 5%; left: 5%; font-size: 120px; animation-delay: 1s; }
+.envelope-2 { bottom: 10%; right: 20%; font-size: 100px; animation-delay: 3s; }
+.envelope-3 { top: 30%; right: 5%; font-size: 160px; animation-delay: 7s; }
+.envelope-4 { bottom: 30%; left: 15%; font-size: 90px; animation-delay: 9s; }
+*/
 
-/* Pastikan konten hero berada di atas video */
-.hero-content {
+@keyframes float {
+    0% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-20px) translateX(10px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+
+/* Pastikan konten hero berada di atas video dan ikon */
+.hero-content-wrapper {
     position: relative;
     z-index: 1;
-    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Teks lebih lebar dari foto */
+    gap: 50px;
+    align-items: center;
+    padding-top: 50px; /* Jarak dari navbar */
+    padding-bottom: 50px;
+    max-width: 1100px; /* Membatasi lebar konten */
 }
 
-.hero-content .profile-photo {
-    width: 200px;
-    height: 200px;
+.hero-text-content {
+    /* Gaya untuk konten teks di kiri */
+}
+
+.hero-profile-container {
+    text-align: center; /* Foto di tengah dalam kolomnya */
+}
+
+.profile-photo-large {
+    width: 280px; /* Ukuran foto yang lebih besar */
+    height: 280px;
     border-radius: 50%;
     object-fit: cover;
-    border: 5px solid var(--primary-color);
-    margin: 0 auto 30px auto;
-    box-shadow: var(--box-shadow);
+    border: none; /* Hilangkan border */
+    box-shadow: none; /* Hilangkan shadow bawaan */
+    margin: 0 auto;
 }
 
-.hero-content h2 {
-    font-size: 3rem;
-    margin-bottom: 15px;
+.main-title {
+    font-size: 3.2rem; /* Ukuran font lebih besar */
+    margin-bottom: 5px;
     color: var(--light-text-color);
+    text-transform: uppercase;
+    font-weight: 900; /* Tebal */
+    letter-spacing: 1px;
+    display: flex; /* Untuk menyejajarkan ikon */
+    align-items: center;
 }
 
-.hero-content p {
-    font-size: 1.2rem;
+.main-title i {
+    color: var(--primary-color); /* Warna ikon '@' */
+    font-size: 2.5rem;
+    margin-left: 10px;
+}
+
+.quote {
+    font-style: normal; /* Hilangkan italic */
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-top: 15px;
     margin-bottom: 30px;
-    color: rgba(255, 255, 255, 0.8);
+    max-width: 550px; /* Batasi lebar kutipan */
+    color: rgba(255, 255, 255, 0.85);
 }
 
-
+/* Tentang Saya Section (Hanya sedikit penyesuaian agar terlihat) */
 .about-section {
-    /* Hapus baris ini: background-color: white; */
-    
-    /* Ganti dengan ini: */
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('background\ Tentang\ saya.jpg') no-repeat center center/cover;
-    color: var(--light-text-color); /* Ubah warna teks agar terlihat di atas gambar gelap */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1500x800/2c3e50/ffffff?text=Background+Tentang+Saya') no-repeat center center/cover;
+    color: var(--light-text-color);
+    padding: 100px 0; /* Padding lebih besar */
 }
 
 .about-section h3 {
-    font-size: 2.8rem; /* Sedikit perbesar */
-    color: var(--light-text-color); /* Menggunakan warna putih/terang */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Bayangan gelap agar timbul */
+    font-size: 2.8rem;
+    color: var(--light-text-color);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
     margin-bottom: 30px;
-    text-transform: uppercase; /* Membuat judul lebih tegas */
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
 .about-section p {
-    color: rgba(255, 255, 255, 0.9); /* Warna putih semi-transparan */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Bayangan tipis */
-    font-size: 1.15rem; /* Sedikit perbesar agar mudah dibaca */
-    line-height: 1.9; /* Perlebar jarak antarbaris */
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    font-size: 1.15rem;
+    line-height: 1.9;
     max-width: 800px;
     margin: 0 auto 15px auto;
 }
 
+
 /* Portfolio Section */
 .portfolio-section {
-    background-color: var(--bg-light);
+    background-color: var(--bg-dark); /* Menggunakan warna gelap */
 }
 
 .portfolio-section h3 {
     font-size: 2.5rem;
     margin-bottom: 40px;
+    color: var(--light-text-color);
 }
 
 .portfolio-grid {
@@ -275,16 +376,17 @@ h1, h2, h3, h4 {
 }
 
 .portfolio-item {
-    background-color: white;
+    background-color: #34495e; /* Latar belakang item portofolio gelap */
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     padding: 20px;
     text-align: left;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .portfolio-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px); /* Efek hover lebih menonjol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .portfolio-item img {
@@ -298,18 +400,20 @@ h1, h2, h3, h4 {
 .portfolio-item h4 {
     font-size: 1.5rem;
     margin-bottom: 10px;
+    color: var(--light-text-color);
 }
 
 .portfolio-item p {
     font-size: 0.95rem;
-    color: #555;
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: 20px;
 }
 
 /* Contact Section */
 .contact-section {
-    background-color: var(--secondary-color);
+    background-color: #1a252f; /* Lebih gelap lagi */
     color: var(--light-text-color);
+    padding: 100px 0;
 }
 
 .contact-section h3 {
@@ -338,8 +442,8 @@ h1, h2, h3, h4 {
 
 /* Footer */
 footer {
-    background-color: #1a252f;
-    color: rgba(255, 255, 255, 0.7);
+    background-color: #0d1217; /* Paling gelap */
+    color: rgba(255, 255, 255, 0.6);
     padding: 30px 0;
     text-align: center;
 }
@@ -364,13 +468,13 @@ footer p {
 }
 
 /*
-  =====================================
-  Media Queries untuk Responsivitas
-  =====================================
+   =====================================
+   Media Queries untuk Responsivitas
+   =====================================
 */
 
-/* Untuk Tablet dan Layar Kecil (Max-width 768px) */
-@media (max-width: 768px) {
+/* Untuk Tablet dan Layar Kecil (Max-width 992px) */
+@media (max-width: 992px) {
     .navbar-container {
         flex-wrap: wrap;
     }
@@ -419,34 +523,43 @@ footer p {
         top: 0;
     }
 
-    .hero-content h2 {
+    /* Hero Section Responsif */
+    .hero-content-wrapper {
+        grid-template-columns: 1fr; /* Ubah ke satu kolom */
+        text-align: center;
+        padding-top: 80px;
+    }
+
+    .hero-text-content {
+        order: 2; /* Pindahkan teks ke bawah foto di mobile */
+    }
+
+    .hero-profile-container {
+        order: 1; /* Pindahkan foto ke atas teks di mobile */
+        margin-bottom: 40px;
+    }
+
+    .main-title {
         font-size: 2.5rem;
     }
 
-    .hero-content p {
-        font-size: 1rem;
-    }
-
-    .profile-photo {
-        width: 150px;
-        height: 150px;
-    }
-
-    .about-section p, .contact-section p {
-        font-size: 1rem;
-    }
-
-    .portfolio-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-    }
-
-    section {
-        padding: 60px 0;
-    }
-
-    h3 {
+    .main-title i {
         font-size: 2rem;
+    }
+
+    .profile-photo-large {
+        width: 250px;
+        height: 250px;
+    }
+
+    .quote {
+        font-size: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .about-section h3, .contact-section h3, .portfolio-section h3 {
+        font-size: 2.2rem;
     }
 }
 
@@ -459,19 +572,21 @@ footer p {
     .navbar-container .logo h1 {
         font-size: 1.5rem;
     }
+    .navbar-container .logo h1 i {
+        font-size: 1.2rem;
+    }
 
-    .hero-content h2 {
+    .main-title {
         font-size: 2rem;
     }
 
-    .hero-content p {
-        font-size: 0.9rem;
+    .main-title i {
+        font-size: 1.5rem;
     }
 
-    .profile-photo {
-        width: 120px;
-        height: 120px;
-        border-width: 3px;
+    .profile-photo-large {
+        width: 180px;
+        height: 180px;
     }
 
     .button-primary, .button-secondary {
@@ -479,7 +594,7 @@ footer p {
         font-size: 0.8rem;
     }
 
-    .about-section p, .contact-section p {
+    .about-section p, .contact-section p, .portfolio-item p {
         font-size: 0.9rem;
     }
 
@@ -495,12 +610,15 @@ footer p {
         font-size: 1.3rem;
     }
 
-    .portfolio-item p {
-        font-size: 0.85rem;
-    }
-
     footer .social-media a {
         font-size: 1.5rem;
         margin: 0 10px;
     }
+
+    .hero-section::before,
+    .hero-section::after {
+        font-size: 80px; /* Perkecil ikon amplop di mobile */
+    }
+    .hero-section::before { top: 5%; left: 5%; }
+    .hero-section::after { bottom: 5%; right: 5%; }
 }

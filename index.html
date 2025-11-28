@@ -11,15 +11,16 @@
 
     <header class="navbar-container">
         <div class="logo">
-            <h1>Deny Azhari</h1>
+            <h1>Deny Azhari <i class="far fa-envelope"></i></h1> 
         </div>
         <nav class="nav-list">
             <ul>
-                <li><a href="#home">Home</a></li>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="#about">Tentang</a></li>
-                <li><a href="#portfolio">Portofolio</a></li>
-                <li><a href="#contact">Kontak</a></li>
-                </ul>
+                <li><a href="" target="_blank">Github</a></li>
+                <li><a href="#portfolio">portfolio</a></li>
+                <li><a href="#contact"><i class="far fa-envelope"></i> Kontak</a></li> 
+            </ul>
         </nav>
         <button class="nav-toggle" aria-label="toggle navigation">
             <span class="hamburger"></span>
@@ -27,17 +28,21 @@
     </header>
 
     <section id="home" class="hero-section">
-        
         <video autoplay loop muted playsinline class="background-video">
             <source src="3129671-uhd_3840_2160_30fps.mp4" type="video/mp4">
             Browser Anda tidak mendukung tag video.
         </video>
         
-        <div class="hero-content">
-            <img src="FB_IMG_1676974955165.jpg" alt="Foto Profil Deny Azhari" class="profile-photo">
-            <h2>Halo, Saya Deny Azhari</h2>
-            <p>Seorang Mahasiswa, dengan minat pada Bidang Komputer & Teknologi Informasi.</p>
-            <a href="#portfolio" class="button-primary">Lihat Karya Saya</a>
+        <div class="hero-content-wrapper container">
+            <div class="hero-text-content">
+                <h2 class="main-title">Web Mahasiswa</h2> 
+                <p class="quote">Seseorang yang pernah melakukan kesalahan dan tidak pernah memperbaikinya berarti Ia telah melakukan satu kesalahan lagi.<br>- Konfusius</p>
+                <a href="#" class="button-primary">KAPUTAMA BINJAI</a>
+            </div>
+
+            <div class="hero-profile-container">
+                <img src="FB_IMG_1676974955165.jpg" alt="Foto Profil Deny Azhari" class="profile-photo-large">
+            </div>
         </div>
     </section>
 
@@ -70,6 +75,12 @@
                     <p>Pembuatan website portofolio untuk fotografer profesional.</p>
                     <a href="" target="_blank" class="button-secondary">Lihat Proyek</a>
                 </div>
+                <div class="portfolio-item">
+                    <img src="Pertaninan.png" alt="Website Portofolio Fotografer">
+                    <h4>Website Pertanian</h4>
+                    <p>Pembuatan website portofolio untuk Pertanian.</p>
+                    <a href="" target="_blank" class="button-secondary">Lihat Proyek</a>
+                </div>
             </div>
         </div>
     </section>
@@ -99,7 +110,6 @@
     </footer>
 
     <script>
-        // JavaScript untuk fungsionalitas tombol navigasi mobile (tetap dipertahankan)
         const navToggle = document.querySelector('.nav-toggle');
         const navList = document.querySelector('.nav-list');
 
@@ -116,8 +126,6 @@
                 }
             });
         });
-
-        // Semua kode untuk Modal Login Dihapus
     </script>
 </body>
 </html>
