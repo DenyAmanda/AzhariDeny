@@ -3,13 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio</title>
+    <title>Portofolio Pertanian Milenial</title>
+
     <style>
+        :root {
+            --bg: #f5f7fa;
+            --card: #ffffff;
+            --text: #1e293b;
+            --desc: #475569;
+
+            --accent: #0284c7;
+            --accent-dark: #0369a1;
+
+            --shadow: rgba(0,0,0,0.15);
+            --shadow-hover: rgba(0,150,255,0.3);
+        }
+
+        /* DARK MODE */
+        body.dark {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #e2e8f0;
+            --desc: #cbd5e1;
+
+            --accent: #38bdf8;
+            --accent-dark: #0ea5e9;
+
+            --shadow: rgba(255,255,255,0.08);
+            --shadow-hover: rgba(0,180,255,0.35);
+        }
+
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background-color: #1e2a38;
-            color: white;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
         h1 {
@@ -17,8 +46,16 @@
             margin-top: 40px;
             font-size: 42px;
             font-weight: 700;
+            animation: fadeIn 1.2s ease;
+            transition: color 0.3s ease;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Portfolio */
         .portfolio-container {
             display: flex;
             justify-content: center;
@@ -29,191 +66,230 @@
 
         .card {
             width: 350px;
-            background-color: #243447;
-            border-radius: 12px;
+            background-color: var(--card);
+            border-radius: 14px;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            transition: 0.3s;
+            box-shadow: 0 6px 18px var(--shadow);
+            transition: 0.35s ease;
+            animation: fadeUp 1s ease;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px var(--shadow-hover);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card img {
             width: 100%;
             height: 210px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px;
+            transition: 0.3s ease;
         }
 
         .card-title {
             font-size: 22px;
             font-weight: 700;
             margin: 18px 0 10px;
+            transition: color 0.3s ease;
         }
 
         .card-desc {
             font-size: 15px;
             line-height: 1.5;
+            color: var(--desc);
+            transition: color 0.3s ease;
             margin-bottom: 20px;
-            color: #cbd5e1;
         }
 
+        /* BUTTON ANIMATED */
         .btn {
             display: inline-block;
             padding: 12px 25px;
-            background-color: #00a5e0;
+            background-color: var(--accent);
             color: white;
             font-weight: 600;
             text-decoration: none;
             border-radius: 8px;
-            transition: 0.3s;
+            transition: 0.28s ease;
+            animation: btnPulse 1.8s infinite;
         }
 
         .btn:hover {
-            background-color: #0087b8;
+            background-color: var(--accent-dark);
+            transform: scale(1.09);
+            box-shadow: 0 0 18px var(--shadow-hover);
         }
 
-        /* ===================================================
-           FLOATING BUTTON KEMBALI KE HOME (MODERN VERSION) 
-        ====================================================*/
+        @keyframes btnPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* HOME BUTTON */
         .btn-home {
             position: fixed;
             left: 50%;
             bottom: 20px;
-            transform: translateX(-50%) scale(1);
-            background-color: #00a5e0;
+            transform: translateX(-50%);
+            background-color: var(--accent);
             padding: 14px 35px;
             color: white;
             font-size: 17px;
             border-radius: 50px;
             font-weight: 700;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0, 170, 255, 0.45);
             display: flex;
             gap: 10px;
             align-items: center;
             transition: 0.3s;
-            opacity: 1;
             z-index: 999;
-            animation: fadeUp 0.7s ease-out;
         }
 
         .btn-home:hover {
-            transform: translateX(-50%) scale(1.08);
-            box-shadow: 0 6px 18px rgba(0, 170, 255, 0.6);
+            transform: translateX(-50%) scale(1.09);
+            box-shadow: 0 6px 18px var(--shadow-hover);
         }
 
-        /* Animasi muncul lembut */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        /* Tombol disembunyikan ketika scroll */
         .hide-btn {
             opacity: 0;
             transform: translateX(-50%) scale(0.9);
             pointer-events: none;
         }
 
-        /* ======================
-           RESPONSIVE DESIGN 
-        =======================*/
+        /* DARK MODE SWITCH */
+        .toggle-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
 
-        @media (max-width: 900px) {
-            .card {
-                width: 300px;
-            }
+        .toggle {
+            width: 65px;
+            height: 32px;
+            background: var(--card);
+            border-radius: 32px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s ease;
+            box-shadow: inset 0 0 6px var(--shadow);
+        }
+
+        .toggle-circle {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            border-radius: 50%;
+            transition: 0.3s ease;
+        }
+
+        body.dark .toggle-circle {
+            transform: translateX(33px);
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            opacity: 0.7;
+            font-size: 14px;
+            transition: color 0.3s ease;
         }
 
         @media (max-width: 600px) {
-            h1 {
-                font-size: 32px;
-            }
-            .portfolio-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .card {
-                width: 90%;
-            }
-            .card img {
-                height: 180px;
-            }
-            .btn-home {
-                width: 80%;
-                justify-content: center;
-                font-size: 16px;
-            }
+            h1 { font-size: 32px; }
+            .card { width: 92%; }
+            .btn-home { width: 80%; }
         }
     </style>
 </head>
+
 <body>
+
+    <!-- DARK MODE BUTTON -->
+    <div class="toggle-container">
+        <div class="toggle" id="toggleDark">
+            <div class="toggle-circle"></div>
+        </div>
+    </div>
 
     <h1>Pertanian Milenial</h1>
 
     <div class="portfolio-container">
 
         <div class="card">
-            <img src="Padi.jpg" alt="E-commerce">
+            <img src="Padi.jpg">
             <div class="card-title">Pertanian Padi</div>
-            <div class="card-desc">Pengembambangan Padi Inpari 32 Dengan Masa Panen Tiga Bulan.</div>
+            <div class="card-desc">Pengembangan Padi Inpari 32 Dengan Masa Panen Tiga Bulan.</div>
             <a href="#" class="btn">LIHAT PROYEK</a>
         </div>
 
         <div class="card">
-            <img src="Jagung.jpg" alt="Food Delivery">
+            <img src="Jagung.jpg">
             <div class="card-title">Pertanian Jagung</div>
-            <div class="card-desc">Pengimplementasian Tanam Jagung Denagn Bibit Vioner.</div>
+            <div class="card-desc">Pengimplementasian Tanam Jagung Dengan Bibit Vioner.</div>
             <a href="#" class="btn">LIHAT PROYEK</a>
         </div>
 
         <div class="card">
-            <img src="Sawit.jpg" alt="Website Pertanian">
+            <img src="Sawit.jpg">
             <div class="card-title">Pertanian Sawit</div>
-            <div class="card-desc">Perawatan Sawit .</div>
+            <div class="card-desc">Perawatan Sawit.</div>
             <a href="#" class="btn">LIHAT PROYEK</a>
         </div>
 
         <div class="card">
-            <img src="Cabai.jpg" alt="Website Pertanian">
+            <img src="Cabai.jpg">
             <div class="card-title">Pertanian Cabai</div>
-            <div class="card-desc">Percobaan Tanam Cabai .</div>
+            <div class="card-desc">Percobaan Tanam Cabai.</div>
             <a href="#" class="btn">LIHAT PROYEK</a>
         </div>
 
     </div>
 
-    <!-- TOMBOL HOME -->
-    <a href="index.html" class="btn-home" id="homeBtn">
-        🏠 Kembali ke Home
-    </a>
+    <!-- HOME BUTTON -->
+    <a href="index.html" class="btn-home" id="homeBtn">🏠 Kembali ke Home</a>
+
+    <footer>© 2025 Pertanian Milenial • Dibuat dengan ❤️</footer>
 
     <script>
-        // Sembunyikan tombol saat scroll ke bawah, tampil saat scroll ke atas
+        /* Hide home button on scroll */
         let lastScroll = 0;
         const homeBtn = document.getElementById("homeBtn");
 
         window.addEventListener("scroll", () => {
             let currentScroll = window.scrollY;
-
-            if (currentScroll > lastScroll) {
-                // scroll turun → tombol hilang
-                homeBtn.classList.add("hide-btn");
-            } else {
-                // scroll naik → tombol muncul
-                homeBtn.classList.remove("hide-btn");
-            }
-
+            if (currentScroll > lastScroll) homeBtn.classList.add("hide-btn");
+            else homeBtn.classList.remove("hide-btn");
             lastScroll = currentScroll;
+        });
+
+        /* Dark mode toggle */
+        const toggleDark = document.getElementById("toggleDark");
+
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark");
+        }
+
+        toggleDark.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+
+            if (document.body.classList.contains("dark")) {
+                localStorage.setItem("darkMode", "enabled");
+            } else {
+                localStorage.removeItem("darkMode");
+            }
         });
     </script>
 

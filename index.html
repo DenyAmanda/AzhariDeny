@@ -4,136 +4,480 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portofolio Saya - Deny Azhari</title>
-    <link rel="stylesheet" href="style.css">
-    
-<script src="https://kit.fontawesome.com/4dca0a2079.js" crossorigin="anonymous"></script>
+
+    <!-- PWA manifest (replace icon paths with your files if you enable PWA) -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0f1724">
+
+    <!-- Font Awesome (ikon) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* ===================== Variables ===================== */
+        :root{
+            --primary: #00bcd4;
+            --primary-600: #02a6bf;
+            --bg-dark: #0f1724;
+            --panel-dark: #19222b;
+            --muted: #94a3b8;
+            --glass: rgba(255,255,255,0.04);
+            --white: #ffffff;
+            --radius: 12px;
+            --transition: 300ms cubic-bezier(.2,.9,.2,1);
+            --blur: 10px;
+        }
+
+        /* Light mode overrides (applied to body.light) */
+        body.light{
+            --primary: #0284c7;
+            --primary-600: #0369a1;
+            --bg-dark: #f6fbff;
+            --panel-dark: #ffffff;
+            --muted: #475569;
+            --glass: rgba(0,0,0,0.03);
+            --white: #091426;
+        }
+
+        /* Respect user's reduced motion preferences */
+        @media (prefers-reduced-motion: reduce){
+            :root{ --transition: 50ms linear; }
+            *{ animation-duration: 1ms !important; transition-duration: 1ms !important; }
+        }
+
+        /* ===================== Global ===================== */
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, 'Helvetica Neue', Arial;
+            background:var(--bg-dark);
+            color:var(--white);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            transition: background var(--transition), color var(--transition);
+            scroll-behavior:smooth;
+        }
+
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        a{color:inherit;text-decoration:none}
+        img{max-width:100%;display:block}
+
+        /* top progress bar */
+        .progress-wrap{position:fixed;left:0;top:0;width:100%;height:4px;z-index:1600}
+        .progress{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--primary-600));transition:width 100ms linear}
+
+        /* ===================== Header / Navbar ===================== */
+        header.navbar-container{
+            position:fixed;top:0;left:0;right:0;z-index:1200;
+            display:flex;align-items:center;justify-content:space-between;
+            gap:20px;padding:14px 22px;background:linear-gradient(180deg, rgba(0,0,0,0.28), transparent);
+            backdrop-filter: blur(var(--blur));
+            transition: background var(--transition), padding var(--transition);
+        }
+
+        .logo h1{font-size:1.3rem;margin:0;display:flex;align-items:center;gap:10px}
+        .logo h1 i{color:var(--primary)}
+
+        nav.nav-list ul{display:flex;gap:18px;align-items:center;margin:0;padding:0}
+        nav.nav-list a{color:var(--white);font-weight:600;padding:6px 8px;border-radius:8px;transition:all var(--transition)}
+        nav.nav-list a:hover, nav.nav-list a[aria-current="true"]{color:var(--primary);background:var(--glass);outline:2px solid transparent}
+
+        .nav-toggle{display:none;background:none;border:none;color:var(--white);cursor:pointer;padding:8px;border-radius:8px}
+        .nav-toggle .hamburger{width:28px;height:3px;background:var(--white);position:relative;border-radius:4px;display:inline-block}
+        .nav-toggle .hamburger::before,.nav-toggle .hamburger::after{content:'';position:absolute;left:0;width:100%;height:3px;background:var(--white);border-radius:4px}
+        .nav-toggle .hamburger::before{top:-8px}
+        .nav-toggle .hamburger::after{top:8px}
+
+        /* ===================== Sidebar (mobile) ===================== */
+        .sidebar{
+            position:fixed;left:-320px;top:0;bottom:0;width:320px;background:var(--panel-dark);padding:80px 20px;z-index:1500;box-shadow:10px 0 40px rgba(2,6,23,0.6);transition:left var(--transition);
+        }
+        .sidebar.active{left:0}
+        .sidebar a{display:block;color:var(--white);padding:14px 10px;border-radius:10px;margin-bottom:8px;font-weight:700}
+        .sidebar a:hover{background:var(--glass);color:var(--primary)}
+
+        /* overlay for sidebar */
+        .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);opacity:0;pointer-events:none;transition:opacity var(--transition);z-index:1400}
+        .overlay.active{opacity:1;pointer-events:all}
+
+        /* ===================== Hero ===================== */
+        .hero-section{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 60px;overflow:hidden}
+        .background-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.65;filter:brightness(0.6);z-index:-1;pointer-events:none;}
+
+        .hero-inner{position:relative;z-index:4;display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center;width:100%;max-width:1200px;margin:0 auto;padding:0 20px}
+        .hero-text .main-title{font-size:3rem;margin:0 0 14px;font-weight:800;letter-spacing:1px; background: linear-gradient(90deg,#fff, #d0f8ff); -webkit-background-clip: text; background-clip: text; color: transparent;}
+        .hero-text .quote{color:rgba(255,255,255,0.9);max-width:700px;line-height:1.6}
+        .hero-profile-container{text-align:center}
+        .profile-photo-large{width:300px;height:300px;border-radius:50%;object-fit:cover;border:6px solid rgba(255,255,255,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.6);transition:transform var(--transition);will-change:transform}
+        .profile-photo-large:hover{transform:translateY(-6px) scale(1.02)}
+
+        .btn-home{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:var(--primary);color:#04111a;padding:12px 30px;border-radius:999px;font-weight:800;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(2,92,102,0.15);z-index:1100}
+        .btn-home.hide-btn{opacity:0;transform:translateX(-50%) scale(0.95);pointer-events:none}
+
+        /* ===================== Sections ===================== */
+        section{padding:80px 0}
+        h3{font-size:2rem;margin-bottom:18px}
+        p.lead{max-width:900px;margin:0 auto;color:var(--muted);line-height:1.8}
+
+        /* Portfolio grid */
+        .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px}
+        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:12px;padding:18px;box-shadow:0 10px 30px rgba(2,6,23,0.5);transition:transform var(--transition),box-shadow var(--transition),opacity var(--transition);transform-origin:center}
+        .card img{height:180px;object-fit:cover;border-radius:10px;margin-bottom:12px}
+        .card h4{margin:6px 0 8px}
+        .card p{color:var(--muted);margin-bottom:12px}
+        .card .button-secondary{background:transparent;border:2px solid var(--primary);color:var(--primary);padding:6px 14px;border-radius:8px;font-weight:700;position:relative;overflow:hidden}
+
+        /* 3D tilt on cards */
+        .card[data-tilt]{transition:transform 350ms cubic-bezier(.2,.9,.2,1), box-shadow 350ms}
+        .card[data-tilt]:hover{transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-8px); box-shadow:0 20px 40px rgba(2,6,23,0.6)}
+
+        /* reveal animation classes (for scroll) */
+        .reveal{opacity:0;transform:translateY(24px);transition:opacity 700ms ease,transform 700ms ease}
+        .reveal.in-view{opacity:1;transform:none}
+
+        /* Contact */
+        .contact-info{display:flex;flex-direction:column;gap:4px;align-items:center;margin-top:5px;}
+        .contact-info p{display:flex;gap:7px;align-items:center}
+        .contact-info i{color:var(--primary)}
+
+        /* Footer */
+        footer{background:transparent;padding:30px 0;text-align:center;color:rgba(255,255,255,0.65)}
+        footer .social-media a{margin:0 10px;color:var(--white);font-size:18px}
+        footer .social-media a:hover{color:var(--primary)}
+
+        /* ripple effect */
+        .ripple{position:relative;overflow:hidden}
+        .ripple .ink{position:absolute;background:rgba(255,255,255,0.18);border-radius:50%;transform:scale(0);animation:ripple 700ms linear}
+        @keyframes ripple{to{transform:scale(4);opacity:0}}
+
+        /* loading screen */
+        .loading-screen{position:fixed;inset:0;background:var(--panel-dark);display:flex;align-items:center;justify-content:center;z-index:2000;color:var(--white);flex-direction:column}
+        .loading-screen .spinner{width:64px;height:64px;border-radius:50%;border:6px solid rgba(255,255,255,0.06);border-top-color:var(--primary);animation:spin 900ms linear infinite;margin-bottom:18px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* Accessibility focus */
+        .show-focus-outlines :focus{outline:3px solid rgba(2,132,199,0.25);outline-offset:3px}
+
+        /* Active nav highlight */
+        .nav-list a.active{box-shadow:inset 0 -3px 0 var(--primary)}
+
+        /* Responsive */
+        @media (max-width:1000px){
+            .hero-inner{grid-template-columns:1fr 320px}
+            .profile-photo-large{width:260px;height:260px}
+        }
+        @media (max-width:820px){
+            nav.nav-list{display:none}
+            .nav-toggle{display:inline-block}
+            .hero-inner{grid-template-columns:1fr;gap:22px;text-align:left}
+            .hero-text{order:2}
+            .hero-profile-container{order:1}
+            .profile-photo-large{width:220px;height:220px;margin:0 auto}
+            header.navbar-container{padding:12px 16px}
+        }
+        @media (max-width:480px){
+            .profile-photo-large{width:180px;height:180px}
+            .hero-text .main-title{font-size:2rem}
+            .btn-home{padding:10px 18px;font-size:14px}
+        }
+
+        /* small niceties */
+        .muted{color:var(--muted)}
+        .flex{display:flex;gap:12px;align-items:center}
+        .center{display:flex;align-items:center;justify-content:center}
+    </style>
+  <style>
+    :root {
+      --transition-speed: 0.45s;
+    }
+    body {
+      transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    }
+    .theme-toggle-anim {
+      transition: transform 0.4s ease;
+    }
+    .theme-toggle-anim.spin {
+      transform: rotate(180deg) scale(1.15);
+    }
+  </style>
 </head>
-<body>
+<body class="dark" data-theme="dark">
 
-    <header class="navbar-container">
-        <div class="logo">
-            
-<h1>Deny Azhari <i class="far fa-envelope"></i></h1> 
-        </div>
-        <nav class="nav-list">
-            <ul>
-                
-<li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#about">Tentang</a></li>
-                
-<li><a href="Latar Pendidikan.html" target="_blank">Github</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                
-<li><a href="#contact"><i class="far fa-envelope"></i> Kontak</a></li> 
-            </ul>
-        </nav>
-        <button class="nav-toggle" aria-label="toggle navigation">
-            <span class="hamburger"></span>
+<!-- top progress bar -->
+<div class="progress-wrap" aria-hidden="true"><div class="progress" id="progressBar"></div></div>
+
+<!-- loading screen -->
+<div id="loadingScreen" class="loading-screen" role="status" aria-live="polite">
+    <div class="spinner" aria-hidden="true"></div>
+    <div>Memuat portofolio...</div>
+</div>
+
+<!-- SIDEBAR for mobile -->
+<div class="sidebar" id="sidebar" aria-hidden="true" aria-label="Menu seluler">
+    <a href="#home">Home</a>
+    <a href="#about">Tentang</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Kontak</a>
+</div>
+<div class="overlay" id="overlay" tabindex="-1"></div>
+
+<!-- NAVBAR -->
+<header class="navbar-container" role="navigation" aria-label="Utama">
+    <div class="logo">
+        <h1>Deny Azhari <i class="far fa-envelope" aria-hidden="true"></i></h1>
+    </div>
+
+    <nav class="nav-list" aria-label="Navigasi utama">
+        <ul>
+            <li><a href="#home" data-target="home"><i class="fas fa-home" aria-hidden="true"></i> Home</a></li>
+            <li><a href="#about" data-target="about">Tentang</a></li>
+            <li><a href="https://github.com/" target="_blank" rel="noopener">Github</a></li>
+            <li><a href="#portfolio" data-target="portfolio">Portfolio</a></li>
+            <li><a href="#contact" data-target="contact"><i class="far fa-envelope" aria-hidden="true"></i> Kontak</a></li>
+        </ul>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:10px">
+        <button class="nav-toggle" id="navToggle" aria-label="toggle navigation">
+            <span class="hamburger" aria-hidden="true"></span>
         </button>
-    </header>
+        <button id="sidebarBtn" class="nav-toggle" aria-label="open sidebar" title="Menu" style="display:none">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button id="modeBtn" class="nav-toggle" aria-label="toggle dark/light">
+            <i id="modeIcon" class="fas fa-moon" aria-hidden="true"></i>
+        </button>
+    </div>
+</header>
 
-    <section id="home" class="hero-section">
-        
-<video autoplay loop muted playsinline class="background-video">
-            <source src="3129671-uhd_3840_2160_30fps.mp4" type="video/mp4">
-            Browser Anda tidak mendukung tag video.
-        </video>
-        
-        
-<div class="hero-content-wrapper container">
-            <div class="hero-text-content">
-                
-<h2 class="main-title">Web Mahasiswa</h2> 
-                
-<p class="quote">Seseorang yang pernah melakukan kesalahan dan tidak pernah memperbaikinya berarti Ia telah melakukan satu kesalahan lagi.<br>- Konfusius</p>
-                
-<a href="#" class="button-primary">KAPUTAMA BINJAI</a>
-            </div>
+<!-- HERO -->
+<section id="home" class="hero-section" aria-label="Beranda">
+    <video class="background-video" autoplay loop muted playsinline poster="hero-poster.jpg" aria-hidden="true">
+        <source src="3129671-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        Browser Anda tidak mendukung tag video.
+    </video>
 
-            <div class="hero-profile-container">
-                
-<img src="FB_IMG_1676974955165.jpg" alt="Foto Profil Deny Azhari" class="profile-photo-large">
-            </div>
-        </div>
-    </section>
-
-    
-<section id="about" class="about-section">
-        <div class="container">
-            <h3>Tentang Saya</h3>
-            <p>Saya adalah Deny Azhari, seorang Mahasiswa Kaputama Binjai dengan pengalaman di bidang Teknologi Informasi dan Pengembangan Website. Saya passionate tentang Pemrograman dan Desain Interaktif. Selama ini, saya telah mengerjakan berbagai proyek yang melibatkan HTML, CSS, dan JavaScript. Selain itu, saya juga memiliki minat dalam Pengembangan IoT, termasuk perancangan dan implementasi solusi yang menghubungkan perangkat keras dengan internet, serta memiliki pengalaman dasar dalam pengembangan solusi IoT menggunakan platform seperti Arduino/Raspberry Pi untuk mengumpulkan dan memvisualisasikan data, .dan aktif mengeksplorasi pengembangan IoT, berfokus pada pembangunan sistem monitoring menggunakan sensor yang terintegrasi dengan web dashboard.</p>
-        </div>
-    </section>
-
-    <section id="portfolio" class="portfolio-section">
-        <div class="container">
-            <h3>Portofolio</h3>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <img src="ecommers.jpg" alt="Proyek Web E-commerce">
-                    <h4>Proyek E-commerce</h4>
-                    <p>Pengembangan toko online responsif dengan fitur keranjang belanja.</p>
-                    <a href="" target="_blank" class="button-secondary">Lihat Proyek</a>
-                </div>
-                <div class="portfolio-item">
-                    <img src="delivery.png" alt="Aplikasi Mobile Food Delivery">
-                    <h4>Aplikasi Food Delivery</h4>
-                    <p>Desain dan implementasi UI/UX untuk aplikasi pengiriman makanan.</p>
-                    <a href="" target="_blank" class="button-secondary">Lihat Proyek</a>
-                </div>
-                <div class="portfolio-item">
-                    <img src="Pertanian.jpg" alt="Website Portofolio Fotografer">
-                    <h4>Website Pertanian</h4>
-                    <p>Implementantasi Beberapa Pertanian yang sudah Dilakukan.</p>
-                    <a href="Pertanian.html" target="_blank" class="button-secondary">Lihat Proyek</a>
-                </div>
+    <div class="hero-inner container">
+        <div class="hero-text">
+            <h2 class="main-title">Web Mahasiswa</h2>
+            <p class="quote">Seseorang yang pernah melakukan kesalahan dan tidak pernah memperbaikinya berarti Ia telah melakukan satu kesalahan lagi.<br>- Konfusius</p>
+            <div style="margin-top:18px">
+                <a href="#portfolio" class="button-primary ripple" style="display:inline-block;padding:10px 18px;border-radius:10px;background:transparent;border:2px solid rgba(255,255,255,0.12);color:var(--white);font-weight:800;transition:all var(--transition)" role="button">KAPUTAMA BINJAI</a>
             </div>
         </div>
-    </section>
 
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h3>Hubungi Saya</h3>
-            <p>Tertarik untuk bekerja sama atau sekadar ingin menyapa? Silakan hubungi saya melalui:</p>
-            <div class="contact-info">
-                
-<p><i class="fas fa-envelope"></i> denyazhari110899@gmail.com</p>
-                <p><i class="fas fa-phone"></i> +62 831 5578 3812</p>
-                <p><i class="fas fa-map-marker-alt"></i> Binjai, Sumatera Utara, Indonesia</p>
-            </div>
-            
-<a href="mailto:denyazhari110899@gmail.com" class="button-primary">Kirim Email</a>
+        <div class="hero-profile-container center" aria-hidden="false">
+            <img src="FB_IMG_1676974955165.jpg" alt="Foto Profil Deny Azhari" class="profile-photo-large" width="300" height="300" loading="lazy">
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer>
-        <div class="container">
-            <div class="social-media">
-                <a href="https://instagram.com/akun_anda" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://linkedin.com/in/akun_anda" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/akun_anda" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-            </div>
-            <p>&copy; 2025 Deny Azhari. Semua Hak Dilindungi.</p>
+<!-- ABOUT -->
+<section id="about" class="reveal container" tabindex="0">
+    <h3>Tentang Saya</h3>
+    <p class="lead">Saya adalah Deny Azhari, seorang Mahasiswa Kaputama Binjai dengan pengalaman di bidang Teknologi Informasi dan Pengembangan Website. Saya passionate tentang Pemrograman dan Desain Interaktif. Selama ini, saya telah mengerjakan berbagai proyek yang melibatkan HTML, CSS, dan JavaScript. Selain itu, saya juga memiliki minat dalam Pengembangan IoT, termasuk perancangan dan implementasi solusi yang menghubungkan perangkat keras dengan internet, serta memiliki pengalaman dasar dalam pengembangan solusi IoT menggunakan platform seperti Arduino/Raspberry Pi untuk mengumpulkan dan memvisualisasikan data, dan aktif mengeksplorasi pengembangan IoT, berfokus pada pembangunan sistem monitoring menggunakan sensor yang terintegrasi dengan web dashboard.</p>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="container reveal">
+    <h3>Portofolio</h3>
+    <div class="portfolio-grid">
+        <div class="card reveal" data-tilt>
+            <img src="ecommers.jpg" alt="Proyek Web E-commerce" loading="lazy">
+            <h4>Proyek E-commerce</h4>
+            <p>Pengembangan toko online responsif dengan fitur keranjang belanja.</p>
+            <a href="#" class="button-secondary ripple" role="button">Lihat Proyek</a>
         </div>
-    </footer>
 
-    <script>
-        const navToggle = document.querySelector('.nav-toggle');
-        const navList = document.querySelector('.nav-list');
+        <div class="card reveal" data-tilt>
+            <img src="delivery.png" alt="Aplikasi Mobile Food Delivery" loading="lazy">
+            <h4>Aplikasi Food Delivery</h4>
+            <p>Desain dan implementasi UI/UX untuk aplikasi pengiriman makanan.</p>
+            <a href="#" class="button-secondary ripple" role="button">Lihat Proyek</a>
+        </div>
 
-        navToggle.addEventListener('click', () => {
-            navList.classList.toggle('active');
-            navToggle.classList.toggle('active');
+        <div class="card reveal" data-tilt>
+            <img src="Pertanian.jpg" alt="Website Pertanian" loading="lazy">
+            <h4>Website Pertanian</h4>
+            <p>Implementasi beberapa pertanian yang sudah dilakukan.</p>
+            <a href="Pertanian.html" target="_blank" rel="noopener" class="button-secondary ripple" role="button">Lihat Proyek</a>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="container reveal">
+    <h3>Hubungi Saya</h3>
+    <p class="lead">Tertarik untuk bekerja sama atau sekadar ingin menyapa? Silakan hubungi saya melalui:</p>
+    <div class="contact-info">
+        <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:denyazhari110899@gmail.com">denyazhari110899@gmail.com</a></p>
+        <p><i class="fas fa-phone" aria-hidden="true"></i> +62 831 5578 3812</p>
+        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Binjai, Sumatera Utara, Indonesia</p>
+    </div>
+    <div style="margin-top:16px;text-align:center">
+        <a href="mailto:denyazhari110899@gmail.com" class="button-primary ripple" style="display:inline-block;padding:10px 18px;border-radius:10px;border:2px solid rgba(255,255,255,0.12);font-weight:700" role="button">Kirim Email</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="social-media">
+            <a href="https://instagram.com/akun_anda" target="_blank" aria-label="Instagram" rel="noopener"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://linkedin.com/in/akun_anda" target="_blank" aria-label="LinkedIn" rel="noopener"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+            <a href="https://github.com/akun_anda" target="_blank" aria-label="GitHub" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i></a>
+        </div>
+        <p>&copy; 2025 Deny Azhari. Semua Hak Dilindungi.</p>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+    /* Helper: safe query */
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    // Sidebar & Overlay (mobile)
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const sidebarBtn = document.getElementById('sidebarBtn');
+
+    function openSidebar(){ sidebar.classList.add('active'); overlay.classList.add('active'); sidebar.setAttribute('aria-hidden','false'); }
+    function closeSidebar(){ sidebar.classList.remove('active'); overlay.classList.remove('active'); sidebar.setAttribute('aria-hidden','true'); }
+    overlay.addEventListener('click', closeSidebar);
+
+    function checkMenuButton(){
+        if(window.innerWidth <= 820){ sidebarBtn.style.display = 'inline-block'; } else { sidebarBtn.style.display = 'none'; closeSidebar(); }
+    }
+    window.addEventListener('resize', checkMenuButton);
+    window.addEventListener('load', checkMenuButton);
+
+    sidebarBtn.addEventListener('click', ()=>{ if(sidebar.classList.contains('active')) closeSidebar(); else openSidebar(); });
+
+    // Mobile nav toggle (collapse nav on small screens)
+    const navList = document.querySelector('.nav-list');
+    const navToggle = document.getElementById('navToggle');
+    navToggle.addEventListener('click', ()=>{ navList.classList.toggle('active'); navToggle.classList.toggle('active'); });
+    document.querySelectorAll('.nav-list a').forEach(a=>a.addEventListener('click', ()=>{ if(navList.classList.contains('active')){ navList.classList.remove('active'); navToggle.classList.remove('active'); } }));
+
+    // Smooth hide/show home button on scroll
+    const homeBtn = document.createElement('a'); homeBtn.className='btn-home'; homeBtn.id='homeBtn'; homeBtn.href='#home'; homeBtn.innerHTML='🏠 Kembali ke Home'; document.body.appendChild(homeBtn);
+    let lastScroll = 0; window.addEventListener('scroll', ()=>{ const current = window.scrollY; if(current > lastScroll) homeBtn.classList.add('hide-btn'); else homeBtn.classList.remove('hide-btn'); lastScroll = current; });
+
+    // Dark / Light Mode with localStorage + animated transition
+    const modeBtn = document.getElementById('modeBtn'); const modeIcon = document.getElementById('modeIcon');
+    function setMode(mode){
+        if(mode==='light'){ document.body.classList.add('light'); document.body.classList.remove('dark'); localStorage.setItem('site-mode','light'); modeIcon.className='fas fa-sun'; document.body.setAttribute('data-theme','light'); }
+        else { document.body.classList.add('dark'); document.body.classList.remove('light'); localStorage.setItem('site-mode','dark'); modeIcon.className='fas fa-moon'; document.body.setAttribute('data-theme','dark'); }
+    }
+    const saved = localStorage.getItem('site-mode'); if(saved) setMode(saved); else setMode('dark');
+    modeBtn.addEventListener('click', ()=>{ const current = document.body.classList.contains('light') ? 'light':'dark'; setMode(current==='light' ? 'dark':'light'); });
+
+    // Reveal on scroll (intersection observer) + active nav highlight
+    const reveals = document.querySelectorAll('.reveal');
+    const sections = $$('section[id]');
+    const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            if(entry.isIntersecting){ entry.target.classList.add('in-view'); obs.unobserve(entry.target); }
         });
+    },{threshold:0.15});
+    reveals.forEach(r=>obs.observe(r));
 
-        document.querySelectorAll('.nav-list a').forEach(item => {
-            item.addEventListener('click', () => {
-                if (navList.classList.contains('active')) {
-                    navList.classList.remove('active');
-                    navToggle.classList.remove('active');
-                }
-            });
+    // Active nav on scroll
+    const sectionObserver = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+            const id = entry.target.id;
+            const navLink = document.querySelector('.nav-list a[data-target="'+id+'"]');
+            if(entry.isIntersecting){
+                if(navLink) { navLink.classList.add('active'); navLink.setAttribute('aria-current','true'); }
+            } else { if(navLink){ navLink.classList.remove('active'); navLink.removeAttribute('aria-current'); } }
         });
-    </script>
+    },{threshold:0.6});
+    sections.forEach(s=>sectionObserver.observe(s));
+
+    // Make cards appear with slight stagger
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((c,i)=>{ c.style.transitionDelay = (i*80)+'ms'; c.classList.add('reveal'); obs.observe(c); });
+
+    // Ripple effect for buttons
+    document.addEventListener('click', function(e){
+        const target = e.target.closest('.ripple');
+        if(!target) return;
+        const ink = document.createElement('span'); ink.className='ink';
+        const rect = target.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height); ink.style.width = ink.style.height = size+'px';
+        ink.style.left = (e.clientX - rect.left - size/2)+'px';
+        ink.style.top = (e.clientY - rect.top - size/2)+'px';
+        target.appendChild(ink);
+        setTimeout(()=>ink.remove(),700);
+    });
+
+    // 3D tilt for cards (simple mousemove)
+    function setupTilt(el){
+        el.addEventListener('mousemove', (ev)=>{
+            const rect = el.getBoundingClientRect();
+            const x = ev.clientX - rect.left; const y = ev.clientY - rect.top;
+            const px = (x / rect.width) - 0.5; const py = (y / rect.height) - 0.5;
+            el.style.setProperty('--rx', `${-py * 8}deg`);
+            el.style.setProperty('--ry', `${px * 8}deg`);
+        });
+        el.addEventListener('mouseleave', ()=>{ el.style.setProperty('--rx','0deg'); el.style.setProperty('--ry','0deg'); });
+    }
+    document.querySelectorAll('[data-tilt]').forEach(setupTilt);
+
+    // Lazy-loading improvement for videos/images handled via loading attribute; observe for eager-loading when near viewport
+    const lazyMedia = document.querySelectorAll('img[loading="lazy"]');
+    const lazyObserver = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{ if(entry.isIntersecting){ const img = entry.target; if(img.dataset.src){ img.src = img.dataset.src; } lazyObserver.unobserve(img); } });
+    },{rootMargin:'200px'});
+    lazyMedia.forEach(i=>lazyObserver.observe(i));
+
+    // Parallax effect on background video (subtle) - uses scroll
+    const bgVideo = document.querySelector('.background-video');
+    window.addEventListener('scroll', ()=>{
+        const scrolled = window.scrollY; bgVideo.style.transform = `translateY(${scrolled * -0.08}px)`;
+    },{passive:true});
+
+    // Scroll progress bar
+    const progressBar = document.getElementById('progressBar');
+    function updateProgress(){ const h = document.documentElement; const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100; progressBar.style.width = pct + '%'; }
+    window.addEventListener('scroll', updateProgress, {passive:true}); updateProgress();
+
+    // Improve focus styles for accessibility
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Tab') document.body.classList.add('show-focus-outlines'); });
+
+    // ensure page starts at top on load when navigating internally
+    if(location.hash) setTimeout(()=>{
+        const el = document.querySelector(location.hash);
+        if(el) window.scrollTo({top:el.offsetTop - 80, behavior:'smooth'});
+    },50);
+
+    // Loading screen hide once content ready
+    window.addEventListener('load', ()=>{
+        const ls = document.getElementById('loadingScreen');
+        ls.style.opacity = 1;
+        setTimeout(()=>{ ls.style.transition = 'opacity 400ms ease'; ls.style.opacity = 0; setTimeout(()=>ls.remove(),420); }, 600);
+    });
+
+    // PWA/service worker registration (won't fail if missing)
+    if('serviceWorker' in navigator){
+        navigator.serviceWorker.register('/sw.js').catch(()=>{/* ignore */});
+    }
+
+    // Small UX: close sidebar with Escape
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeSidebar(); } });
+
+</script>
+  <script>
+    // Interactive Theme Transition Animation
+    const toggleBtn = document.querySelector('#theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.classList.add('theme-toggle-anim');
+      toggleBtn.addEventListener('click', () => {
+        toggleBtn.classList.add('spin');
+        setTimeout(() => toggleBtn.classList.remove('spin'), 500);
+      });
+    }
+  </script>
 </body>
 </html>
