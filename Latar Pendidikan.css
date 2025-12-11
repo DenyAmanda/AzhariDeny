@@ -1,0 +1,115 @@
+/* Pengaturan dasar */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1a2a46; /* Warna latar belakang gelap */
+    color: #ffffff;
+    text-align: center;
+}
+
+.portofolio-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+/* Gaya Judul */
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    font-weight: 600;
+}
+
+/* Tata Letak Grid untuk Proyek */
+.proyek-grid {
+    display: grid;
+    /* Membuat 3 kolom dengan lebar yang sama */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px; /* Jarak antar kartu */
+}
+
+/* Gaya Kartu Proyek */
+.proyek-card {
+    background-color: #2a3e5c; /* Warna latar belakang kartu yang sedikit lebih terang */
+    border-radius: 8px;
+    overflow: hidden; /* Penting agar gambar tidak keluar batas */
+    text-align: left;
+    display: flex;
+    flex-direction: column; /* Konten diatur secara vertikal */
+}
+
+/* Gaya Gambar Proyek */
+.proyek-image-placeholder {
+    width: 100%;
+    height: 200px; /* Atur tinggi gambar sesuai kebutuhan */
+    overflow: hidden;
+}
+
+.proyek-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Pastikan gambar menutupi area tanpa terdistorsi */
+    display: block;
+}
+
+/* Gaya Konten Teks Proyek */
+.proyek-content {
+    padding: 20px;
+    flex-grow: 1; /* Memastikan konten mengisi ruang yang tersedia */
+    display: flex;
+    flex-direction: column;
+}
+
+.proyek-content h2 {
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.proyek-content p {
+    font-size: 0.9em;
+    color: #cccccc;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Memastikan paragraf mendorong tombol ke bawah */
+}
+
+/* Gaya Tombol */
+.btn-lihat-proyek {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #2196f3; /* Warna biru untuk tombol */
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85em;
+    text-align: center;
+    border-radius: 4px;
+    /* Untuk tampilan seperti di gambar */
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-lihat-proyek:hover {
+    background-color: #0b7dda;
+}
+
+/* Media Query untuk Responsif */
+@media (max-width: 768px) {
+    .portofolio-container {
+        margin: 30px auto;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    /* Di layar kecil, kartu akan menumpuk (otomatis karena auto-fit) */
+    .proyek-grid {
+        gap: 20px;
+    }
+}

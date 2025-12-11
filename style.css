@@ -291,18 +291,20 @@ h1, h2, h3, h4 {
     /* Gaya untuk konten teks di kiri */
 }
 
-.hero-profile-container {
-    text-align: center; /* Foto di tengah dalam kolomnya */
-}
-
 .profile-photo-large {
-    width: 280px; /* Ukuran foto yang lebih besar */
+    width: 280px; 
     height: 280px;
     border-radius: 50%;
     object-fit: cover;
-    border: none; /* Hilangkan border */
-    box-shadow: none; /* Hilangkan shadow bawaan */
+    
+    /* Perbaikan: Menggunakan Variabel CSS untuk Warna */
+    border: 5px solid var(--primary-color); /* Hilangkan opasitas di sini */
     margin: 0 auto;
+    
+    /* Perbaikan: Menggunakan Variabel CSS */
+    box-shadow: 0 0 30px var(--primary-color), /* Shadow utama (biru terang) */
+                0 0 50px rgba(0, 188, 212, 0.6), /* Opasitas diterapkan pada RGBA */
+                0 0 10px rgba(255, 255, 255, 0.4); 
 }
 
 .main-title {

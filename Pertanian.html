@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #1e2a38;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .portfolio-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 350px;
+            background-color: #243447;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 18px 0 10px;
+        }
+
+        .card-desc {
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #00a5e0;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0087b8;
+        }
+
+        /* ===================================================
+           FLOATING BUTTON KEMBALI KE HOME (MODERN VERSION) 
+        ====================================================*/
+        .btn-home {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%) scale(1);
+            background-color: #00a5e0;
+            padding: 14px 35px;
+            color: white;
+            font-size: 17px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 170, 255, 0.45);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            transition: 0.3s;
+            opacity: 1;
+            z-index: 999;
+            animation: fadeUp 0.7s ease-out;
+        }
+
+        .btn-home:hover {
+            transform: translateX(-50%) scale(1.08);
+            box-shadow: 0 6px 18px rgba(0, 170, 255, 0.6);
+        }
+
+        /* Animasi muncul lembut */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Tombol disembunyikan ketika scroll */
+        .hide-btn {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.9);
+            pointer-events: none;
+        }
+
+        /* ======================
+           RESPONSIVE DESIGN 
+        =======================*/
+
+        @media (max-width: 900px) {
+            .card {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+            .portfolio-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                width: 90%;
+            }
+            .card img {
+                height: 180px;
+            }
+            .btn-home {
+                width: 80%;
+                justify-content: center;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pertanian Milenial</h1>
+
+    <div class="portfolio-container">
+
+        <div class="card">
+            <img src="Padi.jpg" alt="E-commerce">
+            <div class="card-title">Pertanian Padi</div>
+            <div class="card-desc">Pengembambangan Padi Inpari 32 Dengan Masa Panen Tiga Bulan.</div>
+            <a href="#" class="btn">LIHAT PROYEK</a>
+        </div>
+
+        <div class="card">
+            <img src="Jagung.jpg" alt="Food Delivery">
+            <div class="card-title">Pertanian Jagung</div>
+            <div class="card-desc">Pengimplementasian Tanam Jagung Denagn Bibit Vioner.</div>
+            <a href="#" class="btn">LIHAT PROYEK</a>
+        </div>
+
+        <div class="card">
+            <img src="Sawit.jpg" alt="Website Pertanian">
+            <div class="card-title">Pertanian Sawit</div>
+            <div class="card-desc">Perawatan Sawit .</div>
+            <a href="#" class="btn">LIHAT PROYEK</a>
+        </div>
+
+        <div class="card">
+            <img src="Cabai.jpg" alt="Website Pertanian">
+            <div class="card-title">Pertanian Cabai</div>
+            <div class="card-desc">Percobaan Tanam Cabai .</div>
+            <a href="#" class="btn">LIHAT PROYEK</a>
+        </div>
+
+    </div>
+
+    <!-- TOMBOL HOME -->
+    <a href="index.html" class="btn-home" id="homeBtn">
+        🏠 Kembali ke Home
+    </a>
+
+    <script>
+        // Sembunyikan tombol saat scroll ke bawah, tampil saat scroll ke atas
+        let lastScroll = 0;
+        const homeBtn = document.getElementById("homeBtn");
+
+        window.addEventListener("scroll", () => {
+            let currentScroll = window.scrollY;
+
+            if (currentScroll > lastScroll) {
+                // scroll turun → tombol hilang
+                homeBtn.classList.add("hide-btn");
+            } else {
+                // scroll naik → tombol muncul
+                homeBtn.classList.remove("hide-btn");
+            }
+
+            lastScroll = currentScroll;
+        });
+    </script>
+
+</body>
+</html>
