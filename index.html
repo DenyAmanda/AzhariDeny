@@ -344,10 +344,6 @@
     navToggle.addEventListener('click', ()=>{ navList.classList.toggle('active'); navToggle.classList.toggle('active'); });
     document.querySelectorAll('.nav-list a').forEach(a=>a.addEventListener('click', ()=>{ if(navList.classList.contains('active')){ navList.classList.remove('active'); navToggle.classList.remove('active'); } }));
 
-    // Smooth hide/show home button on scroll
-    const homeBtn = document.createElement('a'); homeBtn.className='btn-home'; homeBtn.id='homeBtn'; homeBtn.href='#home'; homeBtn.innerHTML='🏠 Kembali ke Home'; document.body.appendChild(homeBtn);
-    let lastScroll = 0; window.addEventListener('scroll', ()=>{ const current = window.scrollY; if(current > lastScroll) homeBtn.classList.add('hide-btn'); else homeBtn.classList.remove('hide-btn'); lastScroll = current; });
-
     // Dark / Light Mode with localStorage + animated transition
     const modeBtn = document.getElementById('modeBtn'); const modeIcon = document.getElementById('modeIcon');
     function setMode(mode){
