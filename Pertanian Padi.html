@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pertanian Padi </title>
+
+<style>
+:root{
+  --bg:#ffffff;
+  --card:#ffffff;
+  --text:#222;
+  --muted:#666;
+  --accent:#7fba00;
+  --accent-2:#2c5f1d;
+  --soft:#f2f2f2;
+  --shadow:0 6px 18px rgba(30,30,30,0.06);
+  --radius:12px;
+  --max-width:1180px;
+  --font-sans:"Inter","Segoe UI",Roboto,Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  font-family:var(--font-sans);
+  background:var(--soft);
+  color:var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark{
+  --bg:#0b1c2d;
+  --card:#12263a;
+  --text:#eaf2ff;
+  --muted:#b6c4d6;
+  --accent:#4da3ff;
+  --accent-2:#1e6fd9;
+  --soft:#081523;
+  --shadow:0 8px 22px rgba(0,0,0,0.75);
+}
+
+
+h1{text-align:center;margin:20px 0;}
+
+.wrap{
+  max-width:var(--max-width);
+  margin:20px auto;
+  padding:0 5%;
+}
+
+.product{
+  display:flex;
+  gap:24px;
+  flex-wrap:wrap;
+  margin-bottom:50px; /* jarak bawah antar produk */
+  align-items:flex-start;
+  padding-top:20px;   /* jarak atas */
+  padding-bottom:20px; /* jarak bawah */
+}
+
+.left{flex:0 0 420px;max-width:420px;}
+.card{
+  background:var(--card);
+  padding:14px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.card img{width:100%;border-radius:10px;height: 250px;}
+
+.btn-budidaya{
+  margin-top:14px;
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  transition: background 0.3s;
+}
+.btn-budidaya:hover{background:var(--accent-2);}
+
+.right{flex:1; min-width:250px;}
+.label{
+  background:var(--accent);
+  color:#fff;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  width:max-content;
+}
+.title{
+  font-size:38px;
+  color:var(--accent-2);
+  font-weight:800;
+  margin-top:10px;
+}
+.desc{
+  color:var(--muted);
+  margin-top:8px;
+}
+
+/* Budidaya */
+.budidaya{
+  display:flex;
+  gap:24px;
+  margin-top:30px;
+  flex-wrap:wrap;
+}
+
+.sidebar{
+  width:260px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+body.dark .sb-btn{
+  background:#0f2438;
+  color:#eaf2ff;
+  border:1px solid #1e3a5f;
+}
+body.dark .sb-btn.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+.sb-btn{
+  padding:14px 18px;
+  border-radius:10px;
+  background:#fff;
+  font-weight:700;
+  color:#444;
+  border:1px solid #eee;
+  cursor:pointer;
+  text-align:left;
+  transition: all 0.3s;
+}
+.sb-btn.active{
+  background:var(--accent);
+  color:#fff;
+  transform:scale(1.05);
+}
+
+body.dark .sb-btn{
+  background:#2c2c2c;
+  color:#ddd;
+  border:1px solid #444;
+}
+body.dark .sb-btn.active{
+  background:var(--accent);
+  color:#fff;
+}
+
+.panel{
+  flex:1;
+  background:var(--card);
+  border-radius:12px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  border:2px solid rgba(127,186,0,0.14);
+  min-width:250px;
+  position:relative;
+  overflow:hidden;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* Galeri mini 3 gambar per baris */
+.panel .gallery{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:10px;
+  margin-bottom:15px;
+}
+.panel .gallery img{
+  width:100%;
+  aspect-ratio:1 / 1;  /* persegi */
+  border-radius:8px;
+  object-fit:cover;
+  transition: transform 0.3s;
+}
+.panel .gallery img:hover{
+  transform:scale(1.05);
+}
+
+/* Animasi panel fade */
+.panel div{
+  opacity:1;
+  transition: opacity 0.4s ease;
+}
+.panel div.hidden{
+  opacity:0;
+  position:absolute;
+  top:0; left:0; right:0;
+}
+
+/* Tips */
+.tips{
+  margin-top:18px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Dark Mode Toggle Button */
+#toggle-theme{
+  position:fixed;
+  top:20px;
+  right:20px;
+  z-index:999;
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
+  transition: background 0.3s;
+}
+#toggle-theme:hover{background:var(--accent-2);}
+
+/* Responsive */
+@media(max-width:768px){
+  .product{flex-direction:column;}
+  .left{flex:1; max-width:100%;}
+  .budidaya{flex-direction:column;}
+  .sidebar{width:100%; flex-direction:row; flex-wrap:wrap;}
+  .sb-btn{flex:1; text-align:center;}
+  .panel .gallery{
+    grid-template-columns:repeat(3, 1fr);
+    gap:6px;
+  }
+}
+</style>
+</head>
+<body class="dark">
+
+
+<h1>Pertanian Padi</h1>
+
+<!-- Toggle Dark/Light Mode -->
+<button id="toggle-theme">🌙☀️</button>
+
+<div class="wrap">
+
+<!-- Produk 1 -->
+<div class="product">
+  <div class="left">
+    <div class="card"><img src="Inpari 32.png" alt="Jagung"></div>
+    <button class="btn-budidaya" onclick="toggleBudidaya('budidaya1')">Lihat Budidaya</button>
+  </div>
+  <div class="right">
+    <div class="label">Sweetop Premium</div>
+    <div class="title">Inpari 32</div>
+    <div class="desc">Inpari 32 adalah varietas padi sawah unggul dengan potensi hasil tinggi mencapai 8–9 ton per hektar dan umur panen sekitar 110–115 hari. Varietas ini tahan terhadap Hawar Daun Bakteri (HDB) serta cukup toleran terhadap wereng batang coklat. Beras yang dihasilkan memiliki tekstur pulen dan disukai konsumen, sehingga cocok dibudidayakan di lahan sawah irigasi dengan pengelolaan yang baik.</div>
+  </div>
+</div>
+
+<div id="budidaya1" style="display:none; overflow:hidden; max-height:0; transition:max-height 0.5s ease;">
+  <div class="budidaya">
+    <div class="sidebar">
+      <button class="sb-btn active" onclick="showPanel(this,'p1A')">A. Persiapan Lahan</button>
+      <button class="sb-btn" onclick="showPanel(this,'p1B')">B. Penyemaian</button>
+      <button class="sb-btn" onclick="showPanel(this,'p1C')">C. Penanaman/Pindah Tanam</button>
+      <button class="sb-btn" onclick="showPanel(this,'p1D')">D. Perawatan</button>
+      <button class="sb-btn" onclick="showPanel(this,'p1E')">E. Pengendalian Hama Penyakit</button>
+      <button class="sb-btn" onclick="showPanel(this,'p1F')">F. Panen</button>
+    </div>
+    <div class="panel">
+      <div id="p1A">
+        <div class="gallery">
+          <img src="bajak sawah.jpg" alt="Persiapan1">
+        </div>
+        <h3>A. Persiapan Lahan</h3>
+        <p>Lahan sawah dibersihkan dari gulma dan sisa tanaman, kemudian dibajak dua kali hingga tanah menjadi lumpur halus. Setelah itu, permukaan sawah diratakan agar distribusi air merata. Sebelum tanam, berikan pupuk dasar seperti pupuk organik atau NPK sesuai dosis anjuran untuk mendukung pertumbuhan awal tanaman.</p>
+      </div>
+      <div id="p1B" class="hidden">
+        <div class="gallery">
+          <img src="penyemaian padi.jpg" alt="Penanaman1">
+        </div>
+        <h3>B. Penyemaian padi </h3>
+        <p>Gunakan benih Inpari 32 yang bersertifikat agar kualitas terjamin. Benih direndam selama 24 jam dan diperam ±24 jam hingga berkecambah. Selanjutnya benih disemai di lahan persemaian selama 18–21 hari sampai bibit siap dipindahkan.</p>
+      </div>
+      <div id="p1C" class="hidden">
+        <div class="gallery">
+          <img src="penyemaian padi.jpg" alt="Pemeliharaan1">
+        </div>
+        <h3>C. Penanaman/Pindah Tanam</h3>
+        <p>Pemeliharaan rutin mendukung potensi hasil maksimal benih Pioneer.</p>
+        <p>Gunakan benih Inpari 32 bersertifikat agar kualitas terjamin. Benih direndam selama 24 jam dan diperam ±24 jam hingga berkecambah, lalu disemai selama 18–21 hari sampai bibit siap dipindahkan.</p>
+      </div>
+      <div id="p1D" class="hidden">
+        <div class="gallery">
+          <img src="perawatan padi.jpg" alt="Pemupukan1">
+        </div>
+        <h3>D. Perawatan</h3>
+        <p>Lakukan pemupukan susulan 2–3 kali sesuai fase pertumbuhan. Jaga ketinggian air sekitar 2–5 cm pada fase vegetatif dan lakukan penyiangan gulma secara rutin agar tanaman tumbuh maksimal.</p>
+      </div>
+      <div id="p1E" class="hidden">
+        <div class="gallery">
+          <img src="hama padi.jpg" alt="Hama1">
+        </div>
+        <h3>E.Pengendalian Hama & Penyakit</h3>
+        <p>Pengendalian dilakukan secara terpadu (PHT) dengan pengamatan rutin.
+
+Wereng batang coklat: gunakan insektisida berbahan aktif seperti imidacloprid atau thiamethoxam sesuai dosis anjuran.
+
+Penggerek batang: dapat menggunakan klorantraniliprol sesuai aturan pakai.
+
+Tikus: lakukan sanitasi lahan, gropyokan, dan gunakan rodentisida sesuai anjuran.
+
+Siput / Keong mas: lakukan pengambilan manual pada pagi/sore hari, pasang perangkap daun pepaya atau batang pisang, serta gunakan moluskisida berbahan aktif metaldehid atau niclosamide sesuai dosis anjuran.
+
+Hawar Daun Bakteri (HDB): gunakan bakterisida berbahan tembaga dan hindari pemupukan nitrogen berlebihan.
+
+Penyemprotan sebaiknya dilakukan pada pagi atau sore hari dan sesuai dosis yang tertera pada kemasan untuk mencegah resistensi serta menjaga keseimbangan ekosistem sawah.</p>
+      </div>
+      <div id="p1F" class="hidden">
+        <div class="gallery">
+          <img src="panen padi.jpg" alt="Panen1">
+        </div>
+        <h3>F. Panen</h3>
+        <p>Padi Inpari 32 dapat dipanen pada umur ±110–115 hari setelah tanam, saat 90–95% bulir telah menguning untuk memperoleh hasil dan kualitas gabah yang maksimal.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// Toggle Budidaya slide down/up
+function toggleBudidaya(id){
+  const box = document.getElementById(id);
+  if(box.style.display==='none'){
+    box.style.display='block';
+    setTimeout(()=>{box.style.maxHeight = box.scrollHeight + 'px';},10);
+  } else {
+    box.style.maxHeight = '0';
+    setTimeout(()=>{box.style.display='none';},500);
+  }
+}
+
+// Switch panel dengan animasi fade
+function showPanel(btn, panelId){
+  const sidebar = btn.parentElement;
+  Array.from(sidebar.children).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const panels = sidebar.nextElementSibling.children;
+  Array.from(panels).forEach(p=>{
+    if(p.id === panelId){
+      p.classList.remove('hidden');
+    } else {
+      p.classList.add('hidden');
+    }
+  });
+}
+
+// Toggle Dark / Light
+const toggleBtn = document.getElementById('toggle-theme');
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+});
+</script>
+
+</body>
+</html>
